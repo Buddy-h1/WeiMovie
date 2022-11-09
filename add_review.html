@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/form_style.css">
+    <link rel="stylesheet" type="text/css" href="css/add_file_style.css">
+    <title>WeiMovie</title>
+</head>
+<body>
+    <div class="header_background"></div>
+    <div class="container header_one_logo">
+        <a href="http://weimovie.ru/"><div class="logo"></div></a>
+    </div>
+
+    <div class="container container_white">
+        <div class="review_container">
+            <form action="add_review.php" method="post" enctype="multipart/form-data">
+                <div class="text_field">
+                    <label>Название фильма</label>
+                    <input class="text_field_input" type="text" name="title_movie" id="title_movie" required>
+                </div>
+                <div class="green_border_focus">
+                    <label>Описание фильма</label><br>
+                    <textarea class="form_control_mini" name="description_review" id="description_review" rows="3" required></textarea><br>
+                    <label>Текст отзыва</label><br>
+                    <textarea class="form_control" name="text_review" id="text_review" rows="3" required></textarea>
+                </div>
+                <label class="input_file">
+                    <input type="file" name="poster_review" required>
+                    <span class="input_file_btn">Постер фильма</span>           
+                </label>
+                <div class="text_field text_field_mt20">
+                    <label>Ссылка на трейлер фильма</label>
+                    <input class="text_field_input" type="text" name="link_trailer" id="link_trailer" required>
+                </div>
+                <input class="input_file_btn" type="submit" value="Отправить"><br><br>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+

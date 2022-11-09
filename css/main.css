@@ -8,236 +8,515 @@ body {
 	text-align: center;
 	box-sizing: border-box;
 	overflow-x: hidden;
-    background-color: #B8B8B8;
-}
-
-/* Окно регистрации */
-.modal-overlay {
-	position: fixed;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.7);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100vh;
-	width: 100%;
-	opacity: 0;
-	visibility: hidden;
-	transition: all 0.3s ease-in-out;
-}
-
-.modal {
-	background-color: #fff;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	display: none;
-}
-
-.modal-reg {
-	width: 600px;
-	height: 515px;
-}
-
-.modal-in {
-	width: 600px;
-	height: 320px;
-}
-
-.modal-overlay--visible {
-	opacity: 1;
-	visibility: visible;
-	transition: all 0.3s ease-in-out;
-}
-
-.modal--visible {
-	display: block;
-}
-
-.modal-name {
-    margin-top: 20px;
-    text-align: center;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    text-decoration-color: black;
-}
-
-/* установим отступ 1rem от нижнего края элемента */
-.text-field {
-    margin-bottom: 1rem;
-}
-
-.text-field__label {
-    display: block;
-    font-size: 16px;
-    text-align: left;
-    margin-left: 140px;
-    margin-top: 10px;
-}
-
-  /* стили для input */
-.text-field__input {
-    margin: auto;
-    display: block;
-    width: 300px;
-    height: calc(2.25rem + 2px);
-    padding: 0.375rem 0.75rem;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #bdbdbd;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.container {
-    width: 1024px;
-    margin: auto;
-}
-
-.container_white {
-    width: 1024px;
-    margin: auto;
-    background-color: #F3F3F3;
-}
-
-.header_back {
-	background-color: #1C1C1C;
-	height: 116px;
-    width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: -1;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-}
-
-.push {
-    margin-left: auto;
-}
-
-.logo {
-	background: url("../image/logo_white.png");
-    height: 80px;
-    width: 382px;
-    margin-top: 15px;
-    margin-bottom: 21px;
-}
-
-.btn {
-    padding: 0;
-    border: none;
-    font: inherit;
-    color: inherit;
-    background-color: transparent;
-    cursor: pointer;
-    color: black;
-    margin-right: 20px;
-}
-
-.btn_black {
-    color: black;
-}
-
-.btn_white {
-    color: white;
-}
-
-.btn_reg_in {
-    color: black;
-    border: 2px solid black;
-    padding: 5px 20px;
-}
-
-.btn_center {
-    margin: auto;
-}
-
-.name_out_wrap {
-    display: flex;
-    flex-direction: column;
-}
-
-.name_out_wrap p{
-    margin-top: 20px;
-    color: white;
-}
-
-.name_out_wrap a{
-    margin-top: 20px;
-    margin-right: 0;
-    text-decoration-line: none;
-}
-
-p {
-    margin: 0;
-}
-
-.review_container {
-    display: grid;
-    gap: 0px;
- }
-
- .review_item_1 {
-    grid-row-start: 1;
-    grid-column-start: 1;
- 
-    grid-row-end: 4;
-    grid-column-end: 2;
-
-    margin-right: 20px;
-    margin-top: 20px;
-    margin-left: 20px;
+    background: url("../image/background.jpg");
+    background-size: 500px;
     
- }
- .review_item_2 {
- 
-    grid-row-start: 1;
-    grid-column-start: 2;
- 
-    grid-row-end: 2;
-    grid-column-end: 3;
+}
 
-    text-align: left;
-    font-size: 24px;
-    font-weight: 600;
-    margin-top: 20px;
-    
- }
- .review_item_3 {
- 
-    grid-row-start: 2;
-    grid-column-start: 2;
- 
-    grid-row-end: 3;
-    grid-column-end: 3;
+@media only screen and (min-width: 769px) {
+    /* Основные стили для текста */
+    pre {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+        font-family: 'Inter', sans-serif;
+    }
+    a {
+        text-decoration: none;
+    }
+    p {
+        margin: 0;
+    }
+    .review_text_title {
+        text-align: left;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    .review_text_description {
+        text-align: left;
+        font-size: 20px;
+    }
+    .review_text {
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .review_text_id {
+        color: #c0c0c0;
+    }
+    .review_text_user_date {
+        text-align: left;
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .comment {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-weight: 600;
+    }
+    .comment_user_date {
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 20px;
+        font-size: 20px;
+    }
+    .comment_text {
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        font-size: 18px;
+    }
+    .message {
+        color: white;
+        font-size: 20px;
+        width: 80%;
+        height: 20%;
+        overflow: auto;
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+    }
 
-    text-align: left;
-    font-size: 20px;
-    height: 300px;
-    
- }
- .review_item_4 {
- 
-    grid-row-start: 3;
-    grid-column-start: 2;
- 
-    grid-row-end: 4;
-    grid-column-end: 3;
+    /* Всплывающие окна 
+    входа и регистрации */
+    .modal_overlay {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+    .modal {
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: none;
+    }
+    .modal_reg {
+        width: 600px;
+        height: 515px;
+    }
+    .modal_in {
+        width: 600px;
+        height: 320px;
+    }
+    .modal_overlay_visible {
+        opacity: 1;
+        visibility: visible;
+        transition: all 0.3s ease-in-out;
+    }
+    .modal_visible {
+        display: block;
+    }
+    .modal_name {
+        margin-top: 20px;
+        text-align: center;
+        text-decoration-color: black;
+        font-weight: 600;
+    }
 
-    text-align: left;
-    font-size: 16px;
-    line-height: 20px;
-    
- }
+    /* Контейнеры */
+    .container {
+        max-width: 1024px;
+        margin: auto;
+    }
+    .container_white {
+        background-color: #f3f3f3;
+    }
+    .container_btn_add_review {
+        display: flex;
+        background-color: #141414;
+        height: 40px;
+    }
+
+    /* Шапка */
+    .header_background {
+        background-color: #141414;
+        height: 116px;
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .header_one_logo {
+        display: flex;
+        justify-content: center;
+    }
+    .push {
+        margin-left: auto;
+    }
+    .logo {
+        background: url("../image/logo_white.png");
+        height: 80px;
+        width: 382px;
+        margin-top: 15px;
+        margin-bottom: 21px;
+        margin-left: 10px;
+    }
+    .line {
+        height: 2px;
+        background-color: #000000;
+    }
+
+    /* Стили кнопок */
+    .btn {
+        padding: 0;
+        border: none;
+        font: inherit;
+        color: inherit;
+        background-color: transparent;
+        cursor: pointer;
+        color: black;
+        margin-right: 20px;
+    }
+    .btn_black {
+        color: black;
+    }
+    .btn_white {
+        color: white;
+    }
+    .btn_reg_in {
+        color: black;
+        border: 2px solid black;
+        padding: 5px 20px;
+    }
+    .btn_add_comment {
+        margin-right: 0px;
+        font-size: 15px;
+        color: #ff2929;
+        border: 2px solid black;
+        padding: 5px 20px;
+    }
+    .btn_center {
+        margin: auto;
+    }
+
+    /* Стиль для шапки 
+    (имя, фамилия, кнопка выйти) */
+    .name_out_wrap {
+        display: flex;
+        flex-direction: column;
+    }
+    .name_out_wrap p{
+        margin-right: 10px;
+        margin-top: 20px;
+        color: white;
+    }
+    .name_out_wrap a{
+        margin-top: 20px;
+        margin-right: 10px;
+    }
+
+    /* Показ блока с отзывом */
+    .poster {
+        width: 275px;
+    }
+    .review_container {
+        display: grid;
+        gap: 0px;
+        padding-top: 20px;
+        margin-left: 20px;
+    }
+    .review_item_1 {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-row-end: 4;
+        grid-column-end: 2;
+        width: 275px;
+        margin-right: 20px;
+    }
+    .review_item_2 {
+        grid-row-start: 1;
+        grid-column-start: 2;
+        grid-row-end: 2;
+        grid-column-end: 3;
+    }
+    .review_item_3 {
+        grid-row-start: 2;
+        grid-column-start: 2;
+        grid-row-end: 3;
+        grid-column-end: 3;
+        height: 300px; 
+    }
+    .review_item_4 {
+        grid-row-start: 3;
+        grid-column-start: 2;
+        grid-row-end: 4;
+        grid-column-end: 3; 
+    }
+}
+
+@media only screen and (max-width: 769px) {
+    body {
+        padding: 0;
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 30px;
+        text-align: center;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        background: url("../image/background.jpg");
+        background-size: 500px;
+        
+    }
+    /* Основные стили для текста */
+    pre {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+        font-family: 'Inter', sans-serif;
+    }
+    a {
+        text-decoration: none;
+    }
+    p {
+        margin: 0;
+    }
+    .review_text_title {
+        text-align: left;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .review_text_description {
+        text-align: left;
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .review_text {
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .review_text_id {
+        color: #c0c0c0;
+    }
+    .review_text_user_date {
+        text-align: left;
+        font-size: 10px;
+        line-height: 16px;
+    }
+    .comment {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-weight: 600;
+    }
+    .comment_user_date {
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 20px;
+        font-size: 16px;
+    }
+    .comment_text {
+        text-align: left;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+    .message {
+        color: white;
+        font-size: 16px;
+        width: 80%;
+        height: 20%;
+        overflow: auto;
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    /* Всплывающие окна 
+    входа и регистрации */
+    .modal_overlay {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+    .modal {
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: none;
+    }
+    .modal_reg { /* Поменял */
+        width: 360px;
+        height: 515px;
+    }
+    .modal_in { /* Поменял */
+        width: 360px;
+        height: 320px;
+    }
+    .modal_overlay_visible {
+        opacity: 1;
+        visibility: visible;
+        transition: all 0.3s ease-in-out;
+    }
+    .modal_visible {
+        display: block;
+    }
+    .modal_name {
+        margin-top: 20px;
+        text-align: center;
+        text-decoration-color: black;
+        font-weight: 600;
+    }
+
+    /* Контейнеры */
+    .container {
+        max-width: 1024px;
+        margin: auto;
+    }
+    .container_white {
+        background-color: #f3f3f3;
+    }
+    .container_btn_add_review {
+        display: flex;
+        background-color: #141414;
+        height: 40px;
+    }
+
+    /* Шапка */
+    .header_background {
+        background-color: #141414;
+        height: 116px;
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .header_one_logo {
+        display: flex;
+        justify-content: center;
+    }
+    .push {
+        margin-left: auto;
+    }
+    .logo {
+        background: url("../image/logo_white.png");
+        background-size: cover;
+        height: 40px;
+        width: 191px;
+        margin-top: 35px;
+        margin-bottom: 21px;
+        margin-left: 10px;
+    }
+    .line {
+        height: 2px;
+        background-color: #000000;
+    }
+
+    /* Стили кнопок */
+    .btn {
+        padding: 0;
+        border: none;
+        font: inherit;
+        color: inherit;
+        background-color: transparent;
+        cursor: pointer;
+        color: black;
+        margin-right: 20px;
+    }
+    .btn_black {
+        color: black;
+    }
+    .btn_white {
+        color: white;
+    }
+    .btn_reg_in {
+        color: black;
+        border: 2px solid black;
+        padding: 5px 20px;
+    }
+    .btn_center {
+        margin: auto;
+    }
+
+    /* Стиль для шапки 
+    (имя, фамилия, кнопка выйти) */
+    .name_out_wrap {
+        display: flex;
+        flex-direction: column;
+    }
+    .name_out_wrap p{
+        margin-right: 10px;
+        margin-top: 20px;
+        color: white;
+    }
+    .name_out_wrap a{
+        margin-top: 20px;
+        margin-right: 10px;
+    }
+
+    /* Показ блока с отзывом */
+    .poster {
+        background-size: cover;
+        width: 190px;
+    }
+    .review_container {
+        display: grid;
+        gap: 0px;
+        padding-top: 20px;
+        margin-left: 20px;
+    }
+    .review_item_1 {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        grid-row-end: 4;
+        grid-column-end: 2;
+        margin-right: 20px;
+        width: 190px;
+    }
+    .review_item_2 {
+        grid-row-start: 1;
+        grid-column-start: 2;
+        grid-row-end: 2;
+        grid-column-end: 3;
+    }
+    .review_item_3 {
+        grid-row-start: 2;
+        grid-column-start: 2;
+        grid-row-end: 3;
+        grid-column-end: 3;
+        height: 230px; 
+    }
+}

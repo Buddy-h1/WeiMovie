@@ -18,8 +18,6 @@ else {
     $auth = 0;
 }
 
-$save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
-
 ?>
 
 <!DOCTYPE html>
@@ -29,11 +27,12 @@ $save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/form_style.css">
+    <link rel="stylesheet" type="text/css" href="css/add_file_style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WeiMovie</title>
 </head>
 <body>
-    <div class="header_background"></div>
+<div class="header_background"></div>
     <div class="container header">
         <a href="http://weimovie.ru/"><div class="logo"></div></a>
 
@@ -48,6 +47,14 @@ $save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
         <?php endif; ?>
 
     </div>
+
+    <?php if ($auth_role == "Модератор"): ?>
+        <div class="line"></div>
+        <div class="container container_btn_add_review">
+            <a class="btn btn_white btn_center" href="add_review.html">+Добавить отзыв</a>
+        </div>
+        <div class="line"></div>
+    <?php endif; ?>
     
 
     <div class="modals">
@@ -91,52 +98,70 @@ $save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
 		</div>
 	</div>
 
-    <?php if ($auth_role == "Модератор"): ?>
-        <div class="line"></div>
-        <div class="container container_btn_add_review">
-            <a class="btn btn_white btn_center" href="add_review.html">+Добавить отзыв</a>
+<?php
+$id_rev = $_GET['id'];
+$connect = mysqli_connect($servername, $username, $password, $database);
+$review = mysqli_query($connect, "SELECT video_review, title_review, description_review, poster_review, date_review, name_user, text_review FROM `review` JOIN `user` ON review.id_user = user.id_user WHERE id_review=\"$id_rev\";");
+$review = mysqli_fetch_all($review);
+?>
+<div class="container container_white">
+    <div class="review_container">
+        <div class="review_item_1">
+            <img class="poster" src="posters/<?php echo($review[0][3]); ?>" alt="poster">
         </div>
+        <div class="review_item_2 review_text_title">
+            <p><?php echo($review[0][1]); ?></p>
+        </div>
+        <div class="review_item_3 review_text_description">
+            <p>
+                Описание:<br>
+                <?php echo($review[0][2]); ?> 
+            </p>
+        </div>
+        <div class="review_item_4 review_text_user_date">
+            <p>
+                Автор: <?php echo($review[0][5]); ?><br>Дата добавления: <?php echo($review[0][4]); ?>
+            </p>
+        </div>
+    </div>
+    <iframe width="100%" height="576px" src="<?php echo($review[0][0]); ?>" 
+    title="YouTube video player" frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen></iframe> 
+    <p class="review_text"><pre class="review_text"><?php echo($review[0][6]); ?></pre></p>
+    <div class="line"></div>
+
+<?php if ($auth == 1): ?>
+
+    <form action="add_comment.php?id=<?= $id_rev ?>" method="post">
+        <br><label>Напишите свой комментарий</label><br>
+        <textarea class="form_control_mini" name="text_comment" id="text_comment" rows="3" required></textarea>
+        <button class="input_file_btn"> +Добавить комментарий </button><br><br>
         <div class="line"></div>
-    <?php endif; ?>
-    
-    <?php
-        $result_query = mysqli_query($connect, "SELECT id_review, title_review, description_review, 
-        poster_review, date_review, name_user FROM `review` JOIN `user` ON review.id_user = user.id_user;");
+    </form>
 
-        $array_reviews = mysqli_fetch_all($result_query, MYSQLI_ASSOC);
-        foreach ($array_reviews as $review) { ?>
+<?php endif; ?>
 
-            <div class="container container_white">
-                <div class="review_container">
-                    <div class="review_item_1">
-                        <img class="poster" src="posters/<?= $review['poster_review'] ?>" alt="poster">
-                    </div>
-                    <div class="review_item_2 review_text_title">
+    <p class="comment">Комментарии:</p>
+    <div class="line"></div>
 
-                        <a href="show_review.php?id=<?= $review['id_review']?>" 
-                        class="btn btn_black"><?= $review['title_review'] ?> <span 
-                        class="review_text_id"> | #<?= $review['id_review'] ?></span></a>
+<?php
+    $connect = mysqli_connect($servername, $username, $password, $database);
+    $comments = mysqli_query($connect, "SELECT data_comment, text_comment, name_user FROM comment JOIN user ON comment.user_id = user.id_user WHERE id_review = \"$id_rev\";");
+    $comments = mysqli_fetch_all($comments);
 
-                    </div>
-                    <div class="review_item_3 review_text_description">
-                        <p>
-                            Описание:<br>
-                            <?= $review['description_review'] ?> 
-                        </p>
-                    </div>
-                    <div class="review_item_4 review_text_user_date">
-                        <p>
-                            Автор: <?= $review['name_user'] ?><br>Дата добавления: <?= $review['date_review'] ?>
-                        </p>
-                    </div>
-                </div>
-            </div>
+    foreach ($comments as $item) {
+?>
 
-    <?php
-        } 
-    ?>
+    <p class="comment_user_date"><?= $item[2] ?> | <?= $item[0] ?></p>
+    <p class="comment_text">>>><?= $item[1] ?></p>
+    <div class="line"></div>
 
+<?php
+    }  
+?>
+
+</div>
     <script src="script.js"></script>
-
 </body>
 </html>
