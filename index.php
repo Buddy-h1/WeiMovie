@@ -1,24 +1,11 @@
 <?php
 
-require_once 'connect_db.php';
+require_once 'check_session.php';
 
-$auth = 2;
-$auth_role = "Пользователь";
-
-if (isset($_SESSION['USER'])) {
-    $auth = 1;
-    $input_user_login = $_SESSION['USER'][0][2];
-    $role = mysqli_query($connect, "SELECT role_user FROM user WHERE login_user = \"$input_user_login\";");
-    $role = mysqli_fetch_all($role);
-    if ($role[0][0] == "Модератор") {
-        $auth_role = "Модератор";
-    }   
-}
-else {
-    $auth = 0;
-}
-
-$save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
+$save_email_in = !empty($_COOKIE['email_in']) ? $_COOKIE['email_in'] : '';
+$save_name = !empty($_COOKIE['name']) ? $_COOKIE['name'] : '';
+$save_surname = !empty($_COOKIE['surname']) ? $_COOKIE['surname'] : '';
+$save_email_reg = !empty($_COOKIE['email_reg']) ? $_COOKIE['email_reg'] : '';
 
 ?>
 
@@ -39,7 +26,7 @@ $save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
 
         <?php if ($auth == 1): ?>
             <div class="name_out_wrap push">
-                <p class="name"> <?php print_r($_SESSION['USER'][0][1]); ?> </p>
+                <p class="name"> <?php print_r($_SESSION['USER'][0]['email_user']); ?> </p>
                 <a class="btn btn_white push" href="logout.php">Выйти</a>
             </div>
         <?php else: ?>
@@ -56,12 +43,12 @@ $save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
             <p class="modal_name">Введите данные для входа</p>
 				<form action="input.php" method="post">
                     <div class="text_field">
-                        <label class="text_field_label" for="name">Логин</label>
-                        <input class="text_field_input" type="text" name="login" id="login" placeholder="Логин" value="<?php echo $save_login; ?>" required>
+                        <label class="text_field_label" for="email_in">Электронная почта</label>
+                        <input class="text_field_input" type="text" name="email_in" id="email_in" placeholder="Электронная почта" value="<?php echo $save_email_in; ?>" required>
                     </div>
                     <div class="text_field">
-                        <label class="text_field_label" for="name">Пароль</label>
-                        <input class="text_field_input" type="password" name="password" id="password" placeholder="Пароль" required>
+                        <label class="text_field_label" for="password_in">Пароль</label>
+                        <input class="text_field_input" type="password" name="password_in" id="password_in" placeholder="Пароль" required>
                     </div>
                     <button class="btn btn_reg_in" type="submit">Войти</button>
                 </form>
@@ -71,19 +58,36 @@ $save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
                 <form action="registration.php" method="post">
                     <div class="text_field">
                         <label class="text_field_label" for="name">Имя</label>
-                        <input class="text_field_input" type="text" name="name" id="name" placeholder="Имя" required>
+                        <input class="text_field_input" type="text" name="name" id="name" placeholder="Имя" 
+                        oninvalid="this.setCustomValidity('Имя должно состоять их русских букв, разрешены пробелы и дефисы')" 
+                        onchange="try{setCustomValidity('')}catch(e){}" 
+                        pattern="^[А-Яа-яЁё\s\-]+$" value="<?php echo $save_name; ?>" required>
                     </div>
                     <div class="text_field">
-                        <label class="text_field_label" for="name">Фамилия</label>
-                        <input class="text_field_input" type="text" name="surname" id="surname" placeholder="Фамилия" required>
+                        <label class="text_field_label" for="surname">Фамилия</label>
+                        <input class="text_field_input" type="text" name="surname" id="surname" placeholder="Фамилия" 
+                        oninvalid="this.setCustomValidity('Фамилия должна состоять их русских букв, разрешены пробелы и дефисы')" 
+                        onchange="try{setCustomValidity('')}catch(e){}" 
+                        pattern="^[А-Яа-яЁё\s\-]+$" value="<?php echo $save_surname; ?>" required>
                     </div>
                     <div class="text_field">
-                        <label class="text_field_label" for="name">Логин</label>
-                        <input class="text_field_input" type="text" name="login" id="login" placeholder="Логин" required>
+                        <label class="text_field_label" for="email_reg">Электронная почта</label>
+                        <input class="text_field_input" type="text" name="email_reg" id="email_reg" placeholder="Электронная почта" 
+                        oninvalid="this.setCustomValidity('Некорректная электронная почта')" 
+                        onchange="try{setCustomValidity('')}catch(e){}"
+                        pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" value="<?php echo $save_email_reg; ?>" required>
                     </div>
                     <div class="text_field">
-                        <label class="text_field_label" for="name">Пароль</label>
-                        <input class="text_field_input" type="password" name="password" id="password" placeholder="Пароль" required>
+                        <label class="text_field_label" for="password_reg">Пароль</label>
+                        <input class="text_field_input" type="password" onChange="checkPassword()" name="password_reg" id="password_reg" placeholder="Пароль" required>
+                    </div>
+                    <div class="text_field">
+                        <label class="text_field_label" for="repeat_password_reg">Повтор пароля</label>
+                        <input class="text_field_input" type="password" onChange="checkPassword()" name="repeat_password_reg" id="repeat_password_reg" placeholder="Повтор пароля" required>
+                    </div>
+                    <div>
+                        <input type="checkbox"required id="agreement" name="agreement">
+                        <label class="text_field_check_box" for="agreement">Cогласие на обработку персональных данных</label><br><br>
                     </div>
                     <button class="btn btn_reg_in" type="submit">Регистрация</button>
                 </form>
@@ -94,16 +98,15 @@ $save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
     <?php if ($auth_role == "Модератор"): ?>
         <div class="line"></div>
         <div class="container container_btn_add_review">
-            <a class="btn btn_white btn_center" href="add_review.html">+Добавить отзыв</a>
+            <a class="btn btn_white btn_center" href="add_review_view.php">+Добавить отзыв</a>
         </div>
         <div class="line"></div>
     <?php endif; ?>
     
     <?php
-        $result_query = mysqli_query($connect, "SELECT id_review, title_review, description_review, 
-        poster_review, date_review, name_user FROM `review` JOIN `user` ON review.id_user = user.id_user;");
-
-        $array_reviews = mysqli_fetch_all($result_query, MYSQLI_ASSOC);
+        $result_query = $connect->query("SELECT id_review, title_review, description_review, 
+        poster_review, date_review, name_user FROM `review` JOIN `user` ON review.id_user = user.id_user ORDER BY `date_review`;");
+        $array_reviews = $result_query->fetchAll(PDO::FETCH_ASSOC);
         foreach ($array_reviews as $review) { ?>
 
             <div class="container container_white">
@@ -114,8 +117,7 @@ $save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
                     <div class="review_item_2 review_text_title">
 
                         <a href="show_review.php?id=<?= $review['id_review']?>" 
-                        class="btn btn_black"><?= $review['title_review'] ?> <span 
-                        class="review_text_id"> | #<?= $review['id_review'] ?></span></a>
+                        class="btn btn_black"><?= $review['title_review'] ?></a>
 
                     </div>
                     <div class="review_item_3 review_text_description">
@@ -136,7 +138,7 @@ $save_login = !empty($_COOKIE['login']) ? $_COOKIE['login'] : '';
         } 
     ?>
 
-    <script src="script.js"></script>
+    <script src="js\script.js"></script>
 
 </body>
 </html>

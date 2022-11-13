@@ -5,7 +5,8 @@ $username = "root";
 $password = "1234";
 $database = "movie_review_db";
 
-$connect = mysqli_connect($servername, $username, $password, $database);
+$connect = new PDO("mysql:host=$servername;dbname=$database;charset=utf8", $username, $password);
+
 session_start();
 
 ?>

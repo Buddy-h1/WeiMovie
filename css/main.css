@@ -1,19 +1,20 @@
-body {
-	padding: 0;
-	margin: 0;
-	font-family: 'Inter', sans-serif;
-	font-weight: 400;
-	font-size: 20px;
-	line-height: 30px;
-	text-align: center;
-	box-sizing: border-box;
-	overflow-x: hidden;
-    background: url("../image/background.jpg");
-    background-size: 500px;
-    
-}
 
 @media only screen and (min-width: 769px) {
+    body {
+        padding: 0;
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 30px;
+        text-align: center;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        background: url("../image/background.jpg");
+        background-size: 500px;
+        
+    }
+
     /* Основные стили для текста */
     pre {
         white-space: pre-wrap;
@@ -42,9 +43,6 @@ body {
         text-align: left;
         margin-left: 20px;
         margin-right: 20px;
-    }
-    .review_text_id {
-        color: #c0c0c0;
     }
     .review_text_user_date {
         text-align: left;
@@ -80,6 +78,10 @@ body {
         position: absolute;
         top: 0; left: 0; bottom: 0; right: 0;
     }
+    .err_text {
+        font-size: 16px;
+        color: rgb(255, 60, 60);
+    }
 
     /* Всплывающие окна 
     входа и регистрации */
@@ -108,7 +110,7 @@ body {
     }
     .modal_reg {
         width: 600px;
-        height: 515px;
+        height: 700px;
     }
     .modal_in {
         width: 600px;
@@ -233,6 +235,8 @@ body {
     .review_container {
         display: grid;
         gap: 0px;
+        color: #000000;
+        grid-template-columns: 295px 1fr;
         padding-top: 20px;
         margin-left: 20px;
     }
@@ -310,9 +314,6 @@ body {
         margin-left: 20px;
         margin-right: 20px;
     }
-    .review_text_id {
-        color: #c0c0c0;
-    }
     .review_text_user_date {
         text-align: left;
         font-size: 10px;
@@ -347,6 +348,10 @@ body {
         position: absolute;
         top: 0; left: 0; bottom: 0; right: 0;
     }
+    .err_text {
+        font-size: 12px;
+        color: rgb(255, 60, 60);
+    }
 
     /* Всплывающие окна 
     входа и регистрации */
@@ -375,11 +380,11 @@ body {
     }
     .modal_reg { /* Поменял */
         width: 360px;
-        height: 515px;
+        height: 570px;
     }
     .modal_in { /* Поменял */
         width: 360px;
-        height: 320px;
+        height: 280px;
     }
     .modal_overlay_visible {
         opacity: 1;

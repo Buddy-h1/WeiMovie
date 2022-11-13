@@ -15,31 +15,31 @@
 
 <?php
 
-    require_once 'connect_db.php';
-
-    $auth = 2;
-    $auth_role = "Пользователь";
-
-    if (isset($_SESSION['USER'])) {
-        $auth = 1;
-        $input_user_login = $_SESSION['USER'][0][2];
-        $role = mysqli_query($connect, "SELECT role_user FROM user WHERE login_user = \"$input_user_login\";");
-        $role = mysqli_fetch_all($role);
-        if ($role[0][0] == "Модератор") {
-            $auth_role = "Модератор";
-        }   
-    }
-    else {
-        $auth = 0;
-    }
+    require_once 'check_session.php';
 
     $title_movie = filter_var(trim($_POST['title_movie']), FILTER_SANITIZE_STRING);
     $description_review = filter_var(trim($_POST['description_review']), FILTER_SANITIZE_STRING);
     $text_review = filter_var(trim($_POST['text_review']), FILTER_SANITIZE_STRING);
     $link_trailer = filter_var(trim($_POST['link_trailer']), FILTER_SANITIZE_STRING);
     $date = date("Y-m-d");
-    $id_user = $_SESSION['USER'][0][0];
+    $id_user = $_SESSION['USER'][0]['id_user'];
 
+    $filename = $_FILES['poster_review']['tmp_name'];
+    list($width, $height) = getimagesize($filename);
+
+?>
+    
+<div class="message">
+
+<?php if ($width == "" && $height == ""): ?>
+    <p>Был загружен подозрительный файл<br>Отзыв не был добавлен.<br>
+    <p>Вернитесь назад, чтобы загрузить другой файл.</p>
+    <?php exit; ?>
+<?php endif; ?>
+
+</div>
+
+<?php
     // Генерация нового имени для файла
     $name = $_FILES["poster_review"]["name"];
     $extension = end((explode(".", $name)));
@@ -49,14 +49,26 @@
 
     $result = 0;
     if ($auth == 1 && $auth_role == "Модератор") {
-        $result = mysqli_query($connect, "INSERT INTO review (title_review, description_review, poster_review, video_review, date_review, text_review, id_user) VALUES (\"$title_movie\", \"$description_review\", \"$new_name_file\", \"$link_trailer\", \"$date\", \"$text_review\", \"$id_user\");");
+        $params = [
+            'title_review' => $title_movie,
+            'description_review' => $description_review,
+            'poster_review' => $new_name_file,
+            'video_review' => $link_trailer,
+            'date_review' => $date,
+            'text_review' => $text_review,
+            'id_user' => $id_user
+        ];
+
+        $query = $connect->prepare("INSERT INTO review (title_review, description_review, poster_review, video_review, date_review, text_review, id_user) VALUES (:title_review, :description_review, :poster_review, :video_review, :date_review, :text_review, :id_user)");
+        $query->execute($params);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
 ?>
 
 <div class="message">
 
-<?php if ($result): ?>
+<?php if ($result != 0): ?>
     <p>Обзор был успешно добавлен на weimovie.ru<p>
     <p>Перейдите на Главную для, чтобы смотреть обзоры.</p>
     <a href="http://weimovie.ru/">weimovie.ru</a>

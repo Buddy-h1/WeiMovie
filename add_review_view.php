@@ -2,10 +2,9 @@
 
 require_once 'check_session.php';
 
-$save_email_in = !empty($_COOKIE['email_in']) ? $_COOKIE['email_in'] : '';
-$save_name = !empty($_COOKIE['name']) ? $_COOKIE['name'] : '';
-$save_surname = !empty($_COOKIE['surname']) ? $_COOKIE['surname'] : '';
-$save_email_reg = !empty($_COOKIE['email_reg']) ? $_COOKIE['email_reg'] : '';
+if ($auth_role != "Модератор") {
+    header('Location: http://weimovie.ru/');
+}
 
 ?>
 
@@ -96,87 +95,41 @@ $save_email_reg = !empty($_COOKIE['email_reg']) ? $_COOKIE['email_reg'] : '';
 		</div>
 	</div>
 
-    <div class="line"></div>
+    <?php if ($auth_role == "Модератор"): ?>
+        <div class="line"></div>
         <div class="container container_btn_add_review">
             <a class="btn btn_white btn_center" href="add_review_view.php">+Добавить отзыв</a>
         </div>
-    <div class="line"></div>
-    
-    <?php
-
-        $params = [
-            'id_rev' => (int)$_GET['id']
-        ];
-
-        $query = $connect->prepare("SELECT video_review, title_review, description_review, poster_review, date_review, name_user, text_review FROM `review` JOIN `user` ON review.id_user = user.id_user WHERE id_review = :id_rev");
-        $query->execute($params);
-        $review = $query->fetchAll(PDO::FETCH_ASSOC);
-
-    ?>
+        <div class="line"></div>
+    <?php endif; ?>
 
     <div class="container container_white">
-        <div class="review_container">
-            <div class="review_item_1">
-                <img class="poster" src="posters/<?php echo($review[0]['poster_review']); ?>" alt="poster">
+        <form action="add_review.php" method="post" enctype="multipart/form-data">
+            <div class="text_field"><br>
+                <label>Название фильма</label>
+                <input maxlength="30" class="text_field_input" type="text" name="title_movie" id="title_movie" required>
             </div>
-            <div class="review_item_2 review_text_title">
-                <p><?php echo($review[0]['title_review']); ?></p>
+            <div class="green_border_focus">
+                <label>Описание фильма</label><br>
+                <textarea maxlength="340" class="form_control_mini" name="description_review" id="description_review" rows="3" required></textarea><br>
+                <label>Текст отзыва</label><br>
+                <textarea maxlength="10000" class="form_control" name="text_review" id="text_review" rows="3" required></textarea>
             </div>
-            <div class="review_item_3 review_text_description">
-                <p>
-                    Описание:<br>
-                    <?php echo($review[0]['description_review']); ?> 
-                </p>
+            <label class="input_file">
+                <input type="file" onChange="checkFile()" name="poster_review" id="poster_review" required>
+                <span class="input_file_btn">Постер фильма</span>
+                <p class="err_text" id="err_type_file"></p>           
+            </label>
+            <div class="text_field text_field_mt20">
+                <label>Ссылка на трейлер фильма</label>
+                <input class="text_field_input" type="text" name="link_trailer" id="link_trailer">
             </div>
-            <div class="review_item_4 review_text_user_date">
-                <p>
-                    Автор: <?php echo($review[0]['name_user']); ?><br>Дата добавления: <?php echo($review[0]['date_review']); ?>
-                </p>
-            </div>
-        </div>
-    <?php if ($review[0]['video_review'] != ""): ?>
-        <iframe width="100%" height="576px" src="<?php echo($review[0]['video_review']); ?>" 
-        title="YouTube video player" frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen></iframe> 
-    <?php endif; ?>
-        <p class="review_text"><pre class="review_text"><?php echo($review[0]['text_review']); ?></pre></p>
-        <div class="line"></div>
-
-    <?php if ($auth == 1): ?>
-
-        <form action="add_comment.php?id=<?= (int)$_GET['id'] ?>" method="post">
-            <br><label>Напишите свой комментарий</label><br>
-            <textarea class="form_control_mini" name="text_comment" id="text_comment" rows="3" required></textarea>
-            <button class="input_file_btn"> +Добавить комментарий </button><br><br>
-            <div class="line"></div>
+            <input class="input_file_btn" type="submit" value="Отправить"><br><br>
         </form>
-
-    <?php endif; ?>
-
-        <p class="comment">Комментарии:</p>
-        <div class="line"></div>
-
-    <?php
-
-        $query = $connect->prepare("SELECT data_comment, text_comment, name_user FROM comment JOIN user ON comment.user_id = user.id_user WHERE id_review = :id_rev");
-        $query->execute($params);
-        $comments = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($comments as $item) {
-    ?>
-
-        <p class="comment_user_date"><?= $item['name_user'] ?> | <?= $item['data_comment'] ?></p>
-        <p class="comment_text">>>><?= $item['text_comment'] ?></p>
-        <div class="line"></div>
-
-    <?php
-        }  
-    ?>
-
     </div>
 
     <script src="js\script.js"></script>
 
 </body>
 </html>
+

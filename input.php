@@ -17,10 +17,10 @@
 
     require_once 'connect_db.php';
 
-    $login = filter_var(trim($_POST['login']),
+    $email = filter_var(trim($_POST['email_in']),
     FILTER_SANITIZE_STRING);
-    SetCookie("login", $_POST['login'], time() + 60);
-    $password = filter_var(trim($_POST['password']),
+    SetCookie("email_in", $_POST['email_in'], time() + 120);
+    $password = filter_var(trim($_POST['password_in']),
     FILTER_SANITIZE_STRING);
     $password = md5($password."weimovie");
 
@@ -29,20 +29,22 @@
 <div class="message">
 
 <?php
-    $user = mysqli_query($connect, "SELECT * FROM user WHERE login_user = \"$login\" AND password_user = \"$password\";");
-    $user = mysqli_fetch_all($user);
+    $params = [
+        'email' => $email,
+        'password' => $password
+    ];
+    
+    $query = $connect->prepare("SELECT * FROM user WHERE email_user = :email AND password_user = :password");
+    $query->execute($params);
+    $user = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($user[0] != "") {
+    if ($user[0]['id_user'] != "") {
         $_SESSION['USER'] = $user;
-        ?>
-        <p>Вы вошли в weimovie.ru<p>
-        <p>Перейдите на Главную для, чтобы смотреть обзоры.</p>
-        <a href="http://weimovie.ru/">weimovie.ru</a>
-        <?php
+        header('Location: http://weimovie.ru/');
     }
     else {
         ?>
-        <p>Увы:(<br>Вы ввели неверный логин или пароль.
+        <p>Увы:(<br>Вы ввели неверную электронную почту или пароль.
         <p>Перейдите на Главную и попробуйте снова.</p>
         <a href="http://weimovie.ru/">weimovie.ru</a>
         <?php
