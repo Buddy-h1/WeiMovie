@@ -44,7 +44,7 @@ if ($auth_role != "Модератор") {
 				<form action="input.php" method="post">
                     <div class="text_field">
                         <label class="text_field_label" for="email_in">Электронная почта</label>
-                        <input class="text_field_input" type="text" name="email_in" id="email_in" placeholder="Электронная почта" value="<?php echo $save_email_in; ?>" required>
+                        <input class="text_field_input" type="email" name="email_in" id="email_in" placeholder="Электронная почта" value="<?php echo $save_email_in; ?>" required>
                     </div>
                     <div class="text_field">
                         <label class="text_field_label" for="password_in">Пароль</label>
@@ -72,7 +72,7 @@ if ($auth_role != "Модератор") {
                     </div>
                     <div class="text_field">
                         <label class="text_field_label" for="email_reg">Электронная почта</label>
-                        <input class="text_field_input" type="text" name="email_reg" id="email_reg" placeholder="Электронная почта" 
+                        <input class="text_field_input" type="email" name="email_reg" id="email_reg" placeholder="Электронная почта" 
                         oninvalid="this.setCustomValidity('Некорректная электронная почта')" 
                         onchange="try{setCustomValidity('')}catch(e){}"
                         pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" value="<?php echo $save_email_reg; ?>" required>
